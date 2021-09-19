@@ -1,6 +1,3 @@
 # Leak report
 
-_Use this document to describe whatever memory leaks
-you find in `clean_whitespace.c` and how you might fix
-them. You should also probably remove this explanatory
-text._
+One memory leak is caused by the program not freeing the "stripped" string once done with it. When running the `strip` function, the a string with possible whitespace on the beginning and end is given as the parameter. `strip` then removes this whitespace and returns a string of everything in beween. However, `strip` is only called by the `is_cleaned` function which checks whether a given string has whitespace at the beginning or end and returns a "boolean" (either 1 if true or 2 if false). Since `is_cleaned` returns this "boolean" and not the actual result of cleaning the string, we do not need said result anymore and can free the string after making the comparison. 
